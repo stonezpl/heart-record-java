@@ -7,14 +7,13 @@ import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import java.util.Collections;
 
 /**
- * @Classname MybatisPlusGen
- * @Description 自动生成mybatis-plus相关类的代码
- * @Date 2023/2/25 20:17
- * @Author zhangpeilei
+ * mybatis-plus 自动生成类
+ *
+ * @author  zhangpeilei
  */
 public class MybatisPlusGen {
 
-    private static String URL = "jdbc:mysql://127.0.0.1:3306/record?serverTimezone=Asia/Shanghai&useUnicode=true" +
+    private static String URL = "jdbc:mysql://127.0.0.1:3306/heart_record?serverTimezone=Asia/Shanghai&useUnicode=true" +
             "&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false" +
             "&allowPublicKeyRetrieval=true";
     private static String USERNAME = "root";
@@ -44,7 +43,7 @@ public class MybatisPlusGen {
                             .pathInfo(Collections.singletonMap(OutputFile.xml, XML_OUTPUT)); // 设置mapperXml生成路径
                 })
                 .strategyConfig(builder -> {
-                    builder.addInclude("user") // 设置需要生成的表名
+                    builder.addInclude("wx_record") // 设置需要生成的表名
                             .addTablePrefix("t_", "c_"); // 设置过滤表前缀
                 })
                 .templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板
