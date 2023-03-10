@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class RecordListReqVO {
 
-    @Schema(description = "openId", example = "芋道")
+    @Schema(description = "openId", example = "xxx")
     private String openId;
 
 }

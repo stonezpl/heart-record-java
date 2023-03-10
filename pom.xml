@@ -74,6 +74,7 @@
     </dependencies>
 
     <build>
+        <finalName>heart-record</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

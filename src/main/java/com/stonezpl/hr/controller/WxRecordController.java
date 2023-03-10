@@ -5,9 +5,9 @@ import com.stonezpl.hr.common.pojo.CommonResult;
 import com.stonezpl.hr.controller.vo.RecordListReqVO;
 import com.stonezpl.hr.entity.WxRecord;
 import com.stonezpl.hr.service.IWxRecordService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,14 +31,16 @@ public class WxRecordController {
     @Resource
     private IWxRecordService wxRecordService;
 
+    @Operation(summary = "保存备忘录")
     @PostMapping("/saveRecord")
     public CommonResult<Boolean> saveRecord(@RequestBody WxRecord wxRecord) {
         return CommonResult.success(wxRecordService.save(wxRecord));
     }
 
+    @Operation(summary = "获取备忘录列表")
     @PostMapping("/list")
     public CommonResult<List<WxRecord>> list(@RequestBody RecordListReqVO recordListReqVO) {
-        List<WxRecord>  wxRecords =  wxRecordService.list(new LambdaQueryWrapper<WxRecord>()
+        List<WxRecord> wxRecords = wxRecordService.list(new LambdaQueryWrapper<WxRecord>()
                 .eq(WxRecord::getOpenId, recordListReqVO.getOpenId()));
         return CommonResult.success(wxRecords);
     }
