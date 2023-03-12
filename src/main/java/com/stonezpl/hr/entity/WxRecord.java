@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
  */
 @TableName("wx_record")
 @Schema(description = "记录表")
+@Data
 public class WxRecord implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -43,73 +45,4 @@ public class WxRecord implements Serializable {
 
     @Schema(description = "修改时间")
     private LocalDateTime updateTime;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getRecordTitle() {
-        return recordTitle;
-    }
-
-    public void setRecordTitle(String recordTitle) {
-        this.recordTitle = recordTitle;
-    }
-
-    public String getRecordContent() {
-        return recordContent;
-    }
-
-    public void setRecordContent(String recordContent) {
-        this.recordContent = recordContent;
-    }
-
-    public LocalDateTime getRemindTime() {
-        return remindTime;
-    }
-
-    public void setRemindTime(LocalDateTime remindTime) {
-        this.remindTime = remindTime;
-    }
-
-    public String getOpenId() {
-        return openId;
-    }
-
-    public void setOpenId(String openId) {
-        this.openId = openId;
-    }
-
-    public LocalDateTime getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(LocalDateTime createDate) {
-        this.createDate = createDate;
-    }
-
-    public LocalDateTime getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(LocalDateTime updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    @Override
-    public String toString() {
-        return "WxRecord{" +
-            "id = " + id +
-            ", recordTitle = " + recordTitle +
-            ", recordContent = " + recordContent +
-            ", remindTime = " + remindTime +
-            ", openId = " + openId +
-            ", createDate = " + createDate +
-            ", updateTime = " + updateTime +
-        "}";
-    }
 }

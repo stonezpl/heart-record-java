@@ -8,11 +8,10 @@ import com.stonezpl.hr.service.IWxRecordService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.*;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -26,6 +25,7 @@ import java.util.List;
 @Tag(name = "备忘录信息")
 @RestController
 @RequestMapping("/wxRecord")
+@Slf4j
 public class WxRecordController {
 
     @Resource
@@ -41,8 +41,15 @@ public class WxRecordController {
     @PostMapping("/list")
     public CommonResult<List<WxRecord>> list(@RequestBody RecordListReqVO recordListReqVO) {
         List<WxRecord> wxRecords = wxRecordService.list(new LambdaQueryWrapper<WxRecord>()
-                .eq(WxRecord::getOpenId, recordListReqVO.getOpenId()));
+                .eq(WxRecord::getOpenId, recordListReqVO.getOpenId())
+                .orderByAsc(WxRecord::getRemindTime));
         return CommonResult.success(wxRecords);
+    }
+
+    @Operation(summary = "删除备忘录")
+    @DeleteMapping("/delete/{id}")
+    public CommonResult<Boolean> delete(@PathVariable BigInteger id) {
+        return CommonResult.success(wxRecordService.removeById(id));
     }
 
 }

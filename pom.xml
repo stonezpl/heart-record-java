@@ -20,6 +20,7 @@
         <mysql-connector.version>8.0.32</mysql-connector.version>
         <freemarker.version>2.3.32</freemarker.version>
         <hutool.version>5.8.13</hutool.version>
+        <minio.version>8.5.2</minio.version>
     </properties>
     <dependencies>
         <dependency>
@@ -70,6 +71,12 @@
             <artifactId>hutool-all</artifactId>
             <version>${hutool.version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+            <version>${minio.version}</version>
+        </dependency>
+
 
     </dependencies>
 

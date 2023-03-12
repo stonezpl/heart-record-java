@@ -26,11 +26,16 @@
         </rollingPolicy>
         <encoder>
             <pattern>
-                %d %p (%file:%line\)- %m%n
+                %d %p %c (%file:%line\)- %m%n
             </pattern>
             <charset>UTF-8</charset>
             <!-- 此处设置字符集 -->
         </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>DENY</onMatch>
+            <onMismatch>NEUTRAL</onMismatch>
+        </filter>
     </appender>
 
     <!--sql日志-->
@@ -48,7 +53,7 @@
         <encoder>
             <!--用来设置日志的输入格式-->
             <pattern>
-                %d %p (%file:%line\)- %m%n
+                %d %p %c (%file:%line\)- %m%n
             </pattern>
             <charset>UTF-8</charset>
             <!-- 此处设置字符集 -->
@@ -71,7 +76,7 @@
         <encoder>
             <!--用来设置日志的输入格式-->
             <pattern>
-                %d %p (%file:%line\)- %m%n
+                %d %p %c (%file:%line\)- %m%n
             </pattern>
             <charset>UTF-8</charset>
             <!-- 此处设置字符集 -->
