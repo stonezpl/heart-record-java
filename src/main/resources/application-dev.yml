@@ -15,4 +15,13 @@ knife4j:
 wx:
   appId:
   appSecret:
-  grantType:
+  templateId:
+
+# minio相关参数
+minio:
+  bucket:
+  endpoint:
+  accessKey:
+  secretKey:
+  # 此处填写代理地址，默认和endpoint一个值，不想暴露真实的服务器地址
+  domain:
