@@ -1,0 +1,47 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/heart_record?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+    username:
+    password:
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password:
+    # 连接超时时长（毫秒）
+    timeout: 10000
+    #读取数据超时时间，单位毫秒
+    readTimeout: 3000
+    #redis情报信息缓存限量
+    infoLimit: 10000
+    pool:
+      # 连接池最大连接数（使用负值表示没有限制）
+      max-active: 1000
+      # 连接池最大阻塞等待时间（使用负值表示没有限制）
+      max-wait: -1
+      # 连接池中的最大空闲连接
+      max-idle: 10
+      # 连接池中的最小空闲连接
+      min-idle: 5
+      test-on-borrow: true
+
+# knife4j的增强配置，不需要增强可以不配
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
+
+#微信小程序相关接口参数
+wx:
+  appId:
+  appSecret:
+  templateId:
+
+# minio相关参数
+minio:
+  bucket:
+  endpoint:
+  accessKey:
+  secretKey:
+  # 此处填写代理地址，默认和endpoint一个值，不想暴露真实的服务器地址
+  domain:
