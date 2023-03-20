@@ -1,6 +1,7 @@
 package com.stonezpl.hr.constants;
 
 import com.stonezpl.hr.task.AbstractRedisDelayTask;
+import com.stonezpl.hr.task.MailTask;
 import com.stonezpl.hr.task.SubscribeTask;
 
 /**
@@ -9,7 +10,8 @@ import com.stonezpl.hr.task.SubscribeTask;
  * @date 2023/3/15 17:13
  */
 public enum RedisTaskEnum {
-    subscribe("subscribe", "订阅消息", SubscribeTask.class);
+    subscribe("subscribe", "订阅消息", SubscribeTask.class),
+    mail("mail", "邮件", MailTask.class);
 
     private String name;
     private String desc;

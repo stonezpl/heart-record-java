@@ -22,6 +22,7 @@
         <hutool.version>5.8.13</hutool.version>
         <minio.version>8.5.2</minio.version>
         <jedis.version>4.3.1</jedis.version>
+        <javax.mail.version>1.4.7</javax.mail.version>
     </properties>
     <dependencies>
         <dependency>
@@ -93,8 +94,16 @@
             <artifactId>jedis</artifactId>
             <version>${jedis.version}</version>
         </dependency>
-
-
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>${javax.mail.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
 
     <build>

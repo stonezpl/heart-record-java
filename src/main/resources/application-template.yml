@@ -45,3 +45,12 @@ minio:
   secretKey:
   # 此处填写代理地址，默认和endpoint一个值，不想暴露真实的服务器地址
   domain:
+
+# 发送邮件相关参数
+mail:
+  from:
+  host:
+  port:
+  sslEnable:
+  auth:
+  password:
