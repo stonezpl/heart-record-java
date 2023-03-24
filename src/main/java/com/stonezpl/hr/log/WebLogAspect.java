@@ -1,11 +1,13 @@
 package com.stonezpl.hr.log;
 
 import cn.hutool.json.JSONUtil;
+import com.stonezpl.hr.util.RequestUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -26,45 +28,6 @@ public class WebLogAspect {
     }
 
     /**
-     * 在切点之前织入
-     *
-     * @param joinPoint
-     * @throws Throwable
-     */
-    @Before("log()")
-    public void doBefore(JoinPoint joinPoint) {
-        // 开始打印请求日志
-        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest request = attributes.getRequest();
-
-        // 打印请求相关参数
-        log.info("========================================== Start ==========================================");
-        // 打印请求 url
-        log.info("URL            : {}", request.getRequestURL().toString());
-        // 打印 Http method
-        log.info("HTTP Method    : {}", request.getMethod());
-        // 打印调用 controller 的全路径以及执行方法
-        log.info("Class Method   : {}.{}", joinPoint.getSignature().getDeclaringTypeName(),
-                joinPoint.getSignature().getName());
-        // 打印请求的 IP
-        log.info("IP             : {}", request.getRemoteAddr());
-        // 打印请求入参
-        log.info("Request Args   : {}", JSONUtil.toJsonStr(joinPoint.getArgs()));
-    }
-
-    /**
-     * 在切点之后织入
-     *
-     * @throws Throwable
-     */
-    @After("log()")
-    public void doAfter() throws Throwable {
-        log.info("=========================================== End ===========================================");
-        // 每个请求之间空一行
-        log.info("");
-    }
-
-    /**
      * 环绕
      *
      * @param proceedingJoinPoint
@@ -74,12 +37,41 @@ public class WebLogAspect {
     @Around("log()")
     public Object doAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         long startTime = System.currentTimeMillis();
-        Object result = proceedingJoinPoint.proceed();
-        // 打印出参
-        log.info("Response Args  : {}", JSONUtil.toJsonStr(result));
-        // 执行耗时
-        log.info("Time-Consuming : {} ms", System.currentTimeMillis() - startTime);
+        StringBuilder sb = doBefore(proceedingJoinPoint);
+        Object result = null;
+        try {
+
+            result = proceedingJoinPoint.proceed();
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            // 打印出参
+            sb.append("Response Args  : ").append(JSONUtil.toJsonStr(result)).append("\n");
+            // 执行耗时
+            sb.append("Time-Consuming : ").append(System.currentTimeMillis() - startTime).append("ms").append("\n");
+            sb.append("========= End ==========").append("\n");
+            log.info(sb.toString());
+        }
         return result;
+    }
+
+    public StringBuilder doBefore(ProceedingJoinPoint proceedingJoinPoint) {
+        // 开始打印请求日志
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = attributes.getRequest();
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("\n").append("========= Start ========").append("\n");
+        // 打印请求 url
+        sb.append("URL            : ").append(request.getRequestURL().toString()).append("\n");
+        // 打印 Http method
+        sb.append("HTTP Method    : ").append(request.getMethod()).append("\n");
+        // 打印请求的 IP
+        sb.append("IP             : ").append(RequestUtil.getRealIp(request)).append("\n");
+        // 打印请求入参
+        sb.append("Request Args   : ").append(JSONUtil.toJsonStr(proceedingJoinPoint.getArgs())).append("\n");
+
+        return sb;
     }
 
 }
