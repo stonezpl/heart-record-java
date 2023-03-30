@@ -54,3 +54,12 @@ mail:
   sslEnable:
   auth:
   password:
+
+# chatgpt相关参数
+openai:
+  api-key:
+  max-tokens:
+
+# 敏感词库
+sensitive:
+  path:

@@ -1,8 +1,9 @@
-package com.stonezpl.hr.service;
+package com.stonezpl.hr.service.impl;
 
 import cn.hutool.extra.mail.MailAccount;
 import cn.hutool.extra.mail.MailUtil;
 import com.stonezpl.hr.config.MailProperties;
+import com.stonezpl.hr.service.IMailService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
