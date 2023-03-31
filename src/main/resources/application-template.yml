@@ -57,6 +57,7 @@ mail:
 
 # chatgpt相关参数
 openai:
+  api-key:
   max-tokens:
   proxy-host:
   proxy-port:

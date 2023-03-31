@@ -72,7 +72,7 @@ public class SimpleTrie {
 
     private boolean recursion(String text, int i, Map<Character, Object> child) {
         if (i >= text.length()) {
-            return true;
+            return false;
         }
         Character c = text.charAt(i);
         if (child.containsKey(CHARACTER_END)) {

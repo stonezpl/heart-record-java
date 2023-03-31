@@ -55,6 +55,6 @@ public class SensitiveWordServiceImpl implements SensitiveWordService {
 
     @Override
     public boolean isTextValid(String text) {
-        return false;
+        return sensitiveWordTrie.isValid(text);
     }
 }

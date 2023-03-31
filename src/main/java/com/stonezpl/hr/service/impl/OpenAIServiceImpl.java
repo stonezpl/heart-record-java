@@ -46,10 +46,14 @@ public class OpenAIServiceImpl implements OpenAIService {
 
         HttpRequest httpRequest = HttpRequest.post(OPENAI_URL).setHttpProxy(openAIProperties.getProxyHost(),
                 openAIProperties.getProxyPort()).header("Authorization", "Bearer " +
-                "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").body(JSONUtil.toJsonStr(params));
+                openAIProperties.getApiKey()).body(JSONUtil.toJsonStr(params));
         try (HttpResponse response = httpRequest.execute()) {
             String result = response.body();
             JSONObject jsonObject = JSONUtil.parseObj(result);
+            if (StrUtil.isNotBlank(jsonObject.getStr("error"))) {
+                log.error("OpenAI error: {}", jsonObject.getStr("error"));
+                return "系统可能开小差了,换个问题再试试吧";
+            }
             String text = jsonObject.getJSONArray("choices").getJSONObject(0).getStr("text");
             List<String> sensitiveWords = SpringUtil.getBean(SensitiveWordService.class).validateText(text);
             if (sensitiveWords.size() > 0) {
