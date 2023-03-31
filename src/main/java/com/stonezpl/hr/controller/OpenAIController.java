@@ -1,22 +1,14 @@
 package com.stonezpl.hr.controller;
 
-import cn.hutool.core.util.StrUtil;
-import cn.hutool.extra.spring.SpringUtil;
-import cn.hutool.http.HttpRequest;
-import cn.hutool.json.JSONObject;
-import cn.hutool.json.JSONUtil;
 import com.stonezpl.hr.common.pojo.CommonResult;
 import com.stonezpl.hr.controller.vo.OpenAIReqVO;
-import com.stonezpl.hr.service.SensitiveWordService;
+import com.stonezpl.hr.service.OpenAIService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author stonezpl
@@ -27,6 +19,9 @@ import java.util.Map;
 @RestController
 @RequestMapping("/open/ai")
 public class OpenAIController {
+
+    @Resource
+    private OpenAIService openAIService;
 
     /**
      * 聊天问答
@@ -47,28 +42,7 @@ public class OpenAIController {
      */
     @PostMapping("/chat")
     public CommonResult<String> chat(@RequestBody OpenAIReqVO openAIReqVO) {
-        Map<String, Object> params = new HashMap<>();
-        params.put("model", "text-davinci-003");
-        params.put("prompt", openAIReqVO.getPrompt());
-        params.put("max_tokens", 256);
-        params.put("temperature", 0);
-
-
-        String result = HttpRequest.post("https://api.openai.com/v1/completions")
-                .setHttpProxy("127.0.0.1", 7890)
-                .header("Authorization", "Bearer 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")
-                .body(JSONUtil.toJsonStr(params))
-                .execute().body();
-        JSONObject jsonObject = JSONUtil.parseObj(result);
-        String text = jsonObject.getJSONArray("choices").getJSONObject(0).getStr("text");
-        List<String> sensitiveWords = SpringUtil.getBean(SensitiveWordService.class).validateText(text);
-        if (sensitiveWords.size() > 0) {
-            for (String sensitiveWord : sensitiveWords) {
-                text = StrUtil.replace(text, sensitiveWord, "****");
-            }
-        }
-        return CommonResult.success(text);
-
+        return CommonResult.success(openAIService.generateText(openAIReqVO.getPrompt()));
     }
 
 }
