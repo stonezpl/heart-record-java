@@ -28,3 +28,8 @@ mybatis-plus:
     auto-mapping-behavior: full
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath*:mapper/**/*Mapper.xml
+
+# 配置加密密钥
+jasypt:
+  encryptor:
+    password: heart-record

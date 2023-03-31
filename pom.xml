@@ -23,6 +23,7 @@
         <minio.version>8.5.2</minio.version>
         <jedis.version>4.3.1</jedis.version>
         <javax.mail.version>1.4.7</javax.mail.version>
+        <jasypt.version>3.0.5</jasypt.version>
     </properties>
     <dependencies>
         <dependency>
@@ -107,6 +108,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.ulisesbocchio</groupId>
+            <artifactId>jasypt-spring-boot-starter</artifactId>
+            <version>${jasypt.version}</version>
         </dependency>
     </dependencies>
 
